@@ -8,18 +8,17 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     strategy:
       matrix:
         dotnet-version: [ '8.0.x' ]
         node-version: [ '20.x' ]
 
     steps:
-      # ---------- CHECKOUT ----------
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # ---------- BACKEND (.NET) ----------
+      # .NET Setup
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
@@ -31,18 +30,17 @@ jobs:
 
       - name: Build Backend
         working-directory: CountryApi
-        run: dotnet build --no-restore --configuration Release
+        run: dotnet build --configuration Release
 
-      # Explicitly test the included test project
       - name: Run Backend Tests
         working-directory: CountryApi
-        run: dotnet test Country.Api.Tests/Country.Api.Tests.csproj --no-build --verbosity normal
+        run: dotnet test Country.Api.Tests/Country.Api.Tests.csproj --verbosity normal
 
       - name: Publish Backend (Artifact)
         working-directory: CountryApi
         run: dotnet publish -c Release -o ./publish
 
-      # ---------- FRONTEND (Angular) ----------
+      # Angular Frontend
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -60,7 +58,6 @@ jobs:
         working-directory: country-app
         run: npm run build -- --configuration production
 
-      # ---------- PACKAGE BOTH ----------
       - name: Package Artifacts
         run: |
           mkdir output
