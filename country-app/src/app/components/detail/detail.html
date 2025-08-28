@@ -1,0 +1,22 @@
+<button class="back-button" type="button" (click)="goBack()">
+  Back
+</button>
+
+<div *ngIf="loading">
+  <p>Loading country details...</p>
+</div>
+
+<div *ngIf="country" class="detail-card">
+<img [src]="country.flag" [alt]="country.flagAlt || country.name">
+
+  <h2>{{ country.name }}</h2>
+  <p><strong>Official Name:</strong> {{ country.officialName }}</p>
+  <p><strong>Native Name:</strong> {{ country.nativeName }}</p>
+  <p><strong>Capital(s):</strong> {{ country.capitals.join(', ') }}</p>
+  <p><strong>Region:</strong> {{ country.region }}</p>
+  <p><strong>Flag Facts:</strong>  <br/>{{ country.flagAlt}}</p>
+</div>
+
+<div *ngIf="!loading && error">
+  <p>Country not found.</p>
+</div>

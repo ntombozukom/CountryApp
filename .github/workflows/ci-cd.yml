@@ -1,0 +1,71 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        dotnet-version: [ '8.0.x' ]
+        node-version: [ '20.x' ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # .NET Setup
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+
+      - name: Restore Backend Dependencies
+        working-directory: CountryApi
+        run: dotnet restore
+
+      - name: Build Backend
+        working-directory: CountryApi
+        run: dotnet build --configuration Release
+
+      - name: Run Backend Tests
+        working-directory: CountryApi
+        run: dotnet test Country.Api.Tests/Country.Api.Tests.csproj --verbosity normal
+
+      - name: Publish Backend (Artifact)
+        working-directory: CountryApi
+        run: dotnet publish -c Release -o ./publish
+
+      # Angular Frontend
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install Frontend Dependencies
+        working-directory: country-app
+        run: npm install
+
+      - name: Run Frontend Tests
+        working-directory: country-app
+        run: npm test -- --watch=false --browsers=ChromeHeadless
+
+      - name: Build Frontend
+        working-directory: country-app
+        run: npm run build -- --configuration production
+
+      - name: Package Artifacts
+        run: |
+          mkdir output
+          cp -r CountryApi/publish output/backend
+          cp -r country-app/dist output/frontend
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: deploy-package
+          path: output
