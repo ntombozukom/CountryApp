@@ -1,0 +1,52 @@
+.detail-card {
+  max-width: 400px;
+  margin: 2rem auto;
+  text-align: center;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.detail-card img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+
+.detail-card h2 {
+  margin: 0.5rem 0;
+  font-size: 1.5rem;
+}
+
+.detail-card p {
+  margin: 0.25rem 0;
+  font-size: 1rem;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  margin: 1rem auto 2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 999px; // pill shape
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.back-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-1px);
+}
+
+.back-button:active {
+  transform: translateY(1px);
+}
