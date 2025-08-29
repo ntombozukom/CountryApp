@@ -33,8 +33,8 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: Run Backend Tests
-        working-directory: CountryAppApi/CountryApp.Api
-        run: dotnet test CountryApp.Api.Tests/CountryApp.Api.Tests.csproj --verbosity normal
+        working-directory: CountryAppApi/CountryApp.Api.Tests
+        run: dotnet test CountryApp.Api.Tests.csproj --verbosity normal
 
       - name: Publish Backend (Artifact)
         working-directory: CountryAppApi/CountryApp.Api
