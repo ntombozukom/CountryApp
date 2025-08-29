@@ -25,19 +25,19 @@ jobs:
           dotnet-version: ${{ matrix.dotnet-version }}
 
       - name: Restore Backend Dependencies
-        working-directory: CountryAppApi
+        working-directory: CountryAppApi/CountryApp.Api
         run: dotnet restore
 
       - name: Build Backend
-        working-directory: CountryAppApi
+        working-directory: CountryAppApi/CountryApp.Api
         run: dotnet build --configuration Release
 
       - name: Run Backend Tests
-        working-directory: CountryAppApi
+        working-directory: CountryAppApi/CountryApp.Api
         run: dotnet test CountryApp.Api.Tests/CountryApp.Api.Tests.csproj --verbosity normal
 
       - name: Publish Backend (Artifact)
-        working-directory: CountryApi
+        working-directory: CountryAppApi/CountryApp.Api
         run: dotnet publish -c Release -o ./publish
 
       # Angular Frontend
@@ -61,7 +61,7 @@ jobs:
       - name: Package Artifacts
         run: |
           mkdir output
-          cp -r CountryApi/publish output/backend
+          cp -r CountryAppApi/publish output/backend
           cp -r country-app/dist output/frontend
 
       - name: Upload Artifacts
