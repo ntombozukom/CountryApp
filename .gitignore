@@ -6,9 +6,12 @@ npm-debug.log
 # .NET
 bin/
 obj/
+packages/
+publish/
 *.user
 *.suo
 *.vs/
+*.nupkg
 
 # General
 .env
