@@ -37,7 +37,7 @@ jobs:
         run: dotnet test CountryApp.Api.Tests/CountryApp.Api.Tests.csproj --verbosity normal
 
       - name: Publish Backend (Artifact)
-        working-directory: CountryApi
+        working-directory: CountryAppApi
         run: dotnet publish -c Release -o ./publish
 
       # Angular Frontend
@@ -61,7 +61,7 @@ jobs:
       - name: Package Artifacts
         run: |
           mkdir output
-          cp -r CountryApi/publish output/backend
+          cp -r CountryAppApi/publish output/backend
           cp -r country-app/dist output/frontend
 
       - name: Upload Artifacts
