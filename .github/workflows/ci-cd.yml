@@ -33,8 +33,8 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: Run Backend Tests
-        working-directory: CountryAppApi/CountryApp.Api
-        run: dotnet test CountryApp.Api.Tests/CountryApp.Api.Tests.csproj --verbosity normal
+        working-directory: CountryAppApi/CountryApp.Api.Tests
+        run: dotnet test CountryApp.Api.Tests.csproj --verbosity normal
 
       - name: Publish Backend (Artifact)
         working-directory: CountryAppApi/CountryApp.Api
@@ -61,7 +61,7 @@ jobs:
       - name: Package Artifacts
         run: |
           mkdir output
-          cp -r CountryAppApi/publish output/backend
+          cp -r CountryAppApi/CountryApp.Api/publish output/backend
           cp -r country-app/dist output/frontend
 
       - name: Upload Artifacts
